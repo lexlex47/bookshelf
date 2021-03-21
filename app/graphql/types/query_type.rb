@@ -23,7 +23,17 @@ module Types
       end
     #将argument传入
     def test_field(name:)
+      #log调用graphql controoler中context的time值
+      Rails.logger.info context[:time]
       "Hello #{name}"
+    end
+
+    #root query for author
+    field :author, Types::AuthorType, null: true, description: "One author" do
+      argument :id, ID, required: true
+    end
+    def author(id:)
+      Author.where(id: id).first
     end
 
   end

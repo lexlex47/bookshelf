@@ -8,7 +8,11 @@ class GraphqlController < ApplicationController
     variables = prepare_variables(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
+    #可以在query_types中直接调用
     context = {
+      #例如当前时间时间
+      time: Time.now
+      
       # Query context goes here, for example:
       # current_user: current_user,
     }
