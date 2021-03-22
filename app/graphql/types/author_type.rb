@@ -1,3 +1,17 @@
+#使用input obejct query
+#这样前端可以直接使用inputobject进行传输入值----<
+class Types::AuthorInputType < GraphQL::Schema::InputObject
+
+  graphql_name "AuthorInputType"
+  description "All the attributes for creating an author"
+
+  argument :first_name, String, required: false, camelize: false
+  argument :last_name, String, required: false, camelize: false
+  argument :yob, Int, required: false
+  argument :is_alive, Boolean, required: false, camelize: false
+end
+#>-----------------
+
 class Types::AuthorType < Types::BaseObject
   # description: "An Author"
 

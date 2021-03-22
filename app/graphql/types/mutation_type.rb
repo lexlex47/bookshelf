@@ -4,17 +4,24 @@ module Types
 
     # #第一种创建方式
     # field :create_author, AuthorType, null: false, description: "Create an author" do
-    #   argument :first_name, String, required: false, camelize: false
-    #   argument :last_name, String, required: false, camelize: false
-    #   argument :yob, Int, required: false
-    #   argument :is_alive, Boolean, required: false, camelize: false
+    #   # argument :first_name, String, required: false, camelize: false
+    #   # argument :last_name, String, required: false, camelize: false
+    #   # argument :yob, Int, required: false
+    #   # argument :is_alive, Boolean, required: false, camelize: false
     # end
     # def create_author(first_name:, last_name:, yob:, is_alive:)
     #   Author.create(first_name: first_name, last_name: last_name, yob: yob, is_alive: is_alive)
     # end
 
-    #第二种创建方式，使用delegate mutation
-    field :create_author, Types::AuthorType, mutation: Mutations::CreateAuthor
+    #第二种创建方式，使用delegate mutation, 使用的 mutations/create_author.rb
+    # field :create_author, Types::AuthorType, mutation: Mutations::CreateAuthor
 
+    #第三种方式，使用inputtype
+    field :create_author, AuthorType, null: false, description: "Create an author" do
+      argument :author, Types::AuthorInputType, required: true
+    end
+    def create_author(author:)
+      Author.create(author.to_h)
+    end
   end
 end
