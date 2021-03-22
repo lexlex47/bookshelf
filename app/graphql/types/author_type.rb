@@ -39,4 +39,11 @@ class Types::AuthorType < Types::BaseObject
   #int arrayl类型
   field :publication_years, [Int], null: false
 
+  #加入error反馈validation
+  field :errors, [Types::ErrorType], null: true
+  def errors
+    #把activeRecord返回的errors，装载入可以方便查看的errortype
+    object.errors.map{|e| {field_name: e, errors: object.errors[e]}}
+  end
+
 end

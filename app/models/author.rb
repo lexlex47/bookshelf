@@ -10,4 +10,7 @@ class Author < ApplicationRecord
     (1..rand(10)).to_a.map{ 1900 - rand(100)}
   end
 
+  #加入测试例，检测错误
+  validates :last_name, presence: true
+
 end
