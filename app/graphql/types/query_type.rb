@@ -36,5 +36,11 @@ module Types
       Author.where(id: id).first
     end
 
+    #返回authors的array
+    field :authors, [Types::AuthorType], null: false
+    def authors
+      Author.all
+    end
+
   end
 end
