@@ -21,7 +21,9 @@ class GraphqlController < ApplicationController
       # Query context goes here, for example:
       # current_user: current_user,
       # 返回当前user
-      current_user: session&.user
+      current_user: session&.user,
+      #存储当前session，准备logout
+      session_id: session&.id
     }
     result = BookshelfSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
