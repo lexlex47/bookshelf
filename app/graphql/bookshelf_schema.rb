@@ -2,6 +2,10 @@ class BookshelfSchema < GraphQL::Schema
   mutation(Types::MutationType)
   query(Types::QueryType)
 
+  def self.unauthorized_object(error)
+    raise GraphQL::ExecutionError, "Coordinatate object random are not match requirments"
+  end
+
   # Union and Interface Resolution
   def self.resolve_type(abstract_type, obj, ctx)
     # TODO: Implement this function

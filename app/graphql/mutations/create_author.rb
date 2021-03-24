@@ -11,4 +11,9 @@ class Mutations::CreateAuthor < GraphQL::Schema::Mutation
     Author.create(first_name: first_name, last_name: last_name, yob: yob, is_alive: is_alive)
   end
 
+  # 只能让当前是superadmin的用户来创建新用户
+  def self.accessible?(context)
+    context[:current_user]&.is_superadmin?
+  end
+
 end
