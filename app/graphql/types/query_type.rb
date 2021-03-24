@@ -43,5 +43,24 @@ module Types
       Author.all
     end
 
+    #登陆的api，返回值为session string
+    field :login, String, null: true, description: "Login a user" do
+      argument :email, String, required: true
+      argument :password, String, required: true
+    end
+    def login(email:, password:)
+      # 如果找到用户
+      if user = User.where(email: email).first &.authenticate(password)
+        # 生成并返回session key
+        user.sessions.create.key
+      end
+    end
+
+    # 返回当前登陆的user
+    field :current_user, Types::UserType, null: true, description: "The current logged in user"
+    def current_user
+      context[:current_user]
+    end
+
   end
 end

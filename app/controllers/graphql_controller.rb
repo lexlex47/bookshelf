@@ -8,13 +8,20 @@ class GraphqlController < ApplicationController
     variables = prepare_variables(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
+
+    # 检查header中的session
+    session = Session.where(key: request.headers['Authorization']).first
+    Rails.logger.info "Logged in as \e31m#{session&.user&.email}"
+
     #可以在query_types中直接调用
     context = {
       #例如当前时间时间
-      time: Time.now
+      time: Time.now,
       
       # Query context goes here, for example:
       # current_user: current_user,
+      # 返回当前user
+      current_user: session&.user
     }
     result = BookshelfSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
